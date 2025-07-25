@@ -1,0 +1,61 @@
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import api from '../utils/axios';
+
+function Register() {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
+    if (!username || !email || !password) {
+      setError('Username, email and password are required');
+      return;
+    }
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters');
+      return;
+    }
+    try {
+      await api.post('/users/register', { username, email, password });
+      setSuccess('Registration successful! You can now log in.');
+      setTimeout(() => navigate('/login'), 1200);
+    } catch (err) {
+      setError(err.response?.data?.message || 'Registration failed');
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-900">
+      <form onSubmit={handleSubmit} className="max-w-sm w-full mx-auto p-8 bg-gray-800/80 backdrop-blur-md border border-gray-700 rounded-2xl shadow-lg flex flex-col gap-5">
+        <h2 className="text-2xl font-bold mb-2 text-center text-gray-100">Register</h2>
+        <div className="flex flex-col gap-1">
+          <label className="font-medium text-gray-200">Username</label>
+          <input type="text" value={username} onChange={e => setUsername(e.target.value)} required className="border border-gray-700 bg-gray-900/80 text-gray-100 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" />
+        </div>
+        <div className="flex flex-col gap-1">
+          <label className="font-medium text-gray-200">Email</label>
+          <input type="email" value={email} onChange={e => setEmail(e.target.value)} required className="border border-gray-700 bg-gray-900/80 text-gray-100 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" />
+        </div>
+        <div className="flex flex-col gap-1">
+          <label className="font-medium text-gray-200">Password</label>
+          <input type="password" value={password} onChange={e => setPassword(e.target.value)} required className="border border-gray-700 bg-gray-900/80 text-gray-100 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" />
+        </div>
+        {error && <div className="text-red-400 text-sm text-center">{error}</div>}
+        {success && <div className="text-green-400 text-sm text-center">{success}</div>}
+        <button type="submit" className="bg-blue-600 text-white rounded py-2 font-semibold hover:bg-blue-700 transition">Register</button>
+        <div className="text-center text-sm mt-2">
+          <Link to="/login" className="text-blue-400 hover:underline">Already have an account? Log in</Link>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+export default Register; 
