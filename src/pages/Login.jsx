@@ -40,6 +40,9 @@ function Login() {
         <button type="submit" className="bg-blue-600 text-white rounded py-2 font-semibold hover:bg-blue-700 transition">Log In</button>
         <div className="text-center text-sm mt-2">
           <Link to="/register" className="text-blue-400 hover:underline">Don't have an account? Register</Link>
+          <div className="mt-2">
+            <Link to="/forgot-password" className="text-blue-400 hover:underline">Forgot password?</Link>
+          </div>
         </div>
       </form>
     </div>
