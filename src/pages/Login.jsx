@@ -28,10 +28,8 @@ function Login() {
       const errorMessage = err.response?.data?.message || 'Login failed';
       setError(errorMessage);
       
-      // Check if the error indicates unverified email
-      if (errorMessage.toLowerCase().includes('verify') || 
-          errorMessage.toLowerCase().includes('email') ||
-          err.response?.status === 401) {
+      // Check if the response indicates unverified email
+      if (err.response?.data?.needsVerification) {
         setShowResend(true);
       }
     }
