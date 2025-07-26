@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import api from './utils/axios.js'
 
 const AuthContext = createContext();
 
@@ -9,11 +10,25 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  const fetchUser = async () => {
+    try {
+      const res = await api.get('/users/me');
+      setUser(res.data.user);
+    } catch (error) {
+      console.error('Error fetching user:', error);
+      setUser(null);
+    }
+  };
+
   useEffect(() => {
+
     if (token) {
       // Optionally, fetch user info here
-      setUser({}); // Placeholder, replace with real user fetch if needed
-    } else {
+
+      fetchUser();
+    }
+
+    else {
       setUser(null);
     }
     setLoading(false);

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useAuth } from '../AuthContext';
 import MonthYearSelector from '../features/dashboard/MonthYearSelector';
 import CurrencyToggleSummary from '../features/dashboard/CurrencyToggleSummary';
 import PieChart from '../features/dashboard/PieChart';
@@ -7,6 +8,7 @@ import useDashboardAverages from '../features/dashboard/useDashboardAverages';
 import Top5Expenses from '../features/dashboard/Top5Expenses';
 
 function Dashboard() {
+  const { user } = useAuth();
   const now = new Date();
   const [selectedMonth, setSelectedMonth] = useState(now.getMonth() + 1);
   const [selectedYear, setSelectedYear] = useState(now.getFullYear());
@@ -26,8 +28,24 @@ function Dashboard() {
     }
   }
 
+  // Get user display name (email, username, or name)
+  const getUserDisplayName = () => {
+    if (user?.name) return user.name;
+    if (user?.username) return user.username;
+    if (user?.email) return user.email.split('@')[0]; // Use part before @ from email
+    return 'User';
+  };
+
   return (
     <div className="max-w-6xl mx-auto mt-8 p-2 sm:p-6">
+      {/* Welcome Message */}
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold text-gray-100 mb-2">
+          Hello, {getUserDisplayName()}! 👋
+        </h1>
+        <p className="text-gray-300">Welcome to your expense dashboard</p>
+      </div>
+      
       <h2 className="text-2xl font-bold mb-6 text-gray-100">Dashboard</h2>
       {/* Month/Year Selector and Currency Toggle */}
       <div className="flex items-center gap-4 mb-6">
