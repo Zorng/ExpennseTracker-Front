@@ -7,6 +7,7 @@ function Login() {
   const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
@@ -34,7 +35,23 @@ function Login() {
         </div>
         <div className="flex flex-col gap-1">
           <label className="font-medium text-gray-200">Password</label>
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)} required className="border border-gray-700 bg-gray-900/80 text-gray-100 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" />
+          <div className="relative">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+              className="border border-gray-700 bg-gray-900/80 text-gray-100 rounded px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-600 pr-16"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(v => !v)}
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-blue-400 hover:underline focus:outline-none"
+              tabIndex={-1}
+            >
+              {showPassword ? 'Hide' : 'Show'}
+            </button>
+          </div>
         </div>
         {error && <div className="text-red-400 text-sm text-center">{error}</div>}
         <button type="submit" className="bg-blue-600 text-white rounded py-2 font-semibold hover:bg-blue-700 transition">Log In</button>

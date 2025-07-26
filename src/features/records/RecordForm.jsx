@@ -87,26 +87,26 @@ function RecordForm({ onSubmit, onCancel, initialData = {}, compact = false }) {
     <form onSubmit={handleSubmit} className={`flex flex-col ${compact ? 'gap-2' : 'gap-4'}`}>
       <div className={`flex flex-col ${compact ? 'gap-0.5' : 'gap-1'}`}>
         <label className="font-medium mb-0.5">Title</label>
-        <input value={title} onChange={e => setTitle(e.target.value)} required className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+        <input value={title} onChange={e => setTitle(e.target.value)} required className="border border-gray-700 bg-gray-700/80 text-gray-100 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
       </div>
       <div className="flex flex-col gap-1">
         <label className="font-medium">Date</label>
-        <input type="date" value={date} onChange={e => setDate(e.target.value)} required className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+        <input type="date" value={date} onChange={e => setDate(e.target.value)} required className="border border-gray-700 bg-gray-700/80 text-gray-100 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
       </div>
       <div className="flex flex-col gap-1">
         <label className="font-medium">Currency</label>
-        <select value={currency} onChange={e => setCurrency(e.target.value)} className="border rounded px-3 py-2">
+        <select value={currency} onChange={e => setCurrency(e.target.value)} className="border border-gray-700 bg-gray-700/80 text-gray-100 rounded px-3 py-2">
           <option value="USD">USD</option>
           <option value="KHR">KHR</option>
         </select>
       </div>
       <div className="flex flex-col gap-1">
         <label className="font-medium">Amount</label>
-        <input type="number" value={amount} onChange={e => setAmount(e.target.value)} required min="0" step="0.01" className="border rounded px-3 py-2" />
+        <input type="number" value={amount} onChange={e => setAmount(e.target.value)} required min="0" step="0.01" className="border border-gray-700 bg-gray-700/80 text-gray-100 rounded px-3 py-2" />
       </div>
       <div className="flex flex-col gap-1">
         <label className="font-medium">Category</label>
-        <select value={categoryId} onChange={e => setCategoryId(e.target.value)} className="border rounded px-3 py-2">
+        <select value={categoryId} onChange={e => setCategoryId(e.target.value)} className="border border-gray-700 bg-gray-700/80 text-gray-100 rounded px-3 py-2">
           <option value="">Uncategorized</option>
           <option value="__create__">+ Create New Category</option>
           {categories.map(cat => (
@@ -129,7 +129,7 @@ function RecordForm({ onSubmit, onCancel, initialData = {}, compact = false }) {
       </div>
       <div className="flex flex-col gap-1">
         <label className="font-medium">Description</label>
-        <textarea value={description} onChange={e => setDescription(e.target.value)} className="border rounded px-3 py-2" rows={2} />
+        <textarea value={description} onChange={e => setDescription(e.target.value)} className="border border-gray-700 bg-gray-700/80 text-gray-100 rounded px-3 py-2" rows={2} />
       </div>
       {error && <div className="text-red-500 text-sm">{error}</div>}
       <div className="flex gap-2 mt-2">
