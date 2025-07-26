@@ -18,7 +18,7 @@ function EmailVerification() {
       }
 
       try {
-        await api.post('/users/verify-email', { token });
+        await api.post(`/users/verify-email?token=${token}`);
         setStatus('success');
         setMessage('Email verified successfully! You can now log in to your account.');
       } catch (err) {
