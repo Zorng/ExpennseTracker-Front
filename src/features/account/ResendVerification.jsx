@@ -30,6 +30,7 @@ function ResendVerification({ email, onSuccess, className = '' }) {
   return (
     <div className={className}>
       <button
+        type="button"
         onClick={handleResend}
         disabled={loading}
         className="text-blue-400 hover:underline text-sm disabled:opacity-50 disabled:cursor-not-allowed"
