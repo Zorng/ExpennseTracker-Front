@@ -9,6 +9,7 @@ function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [isRegistered, setIsRegistered] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -25,12 +26,45 @@ function Register() {
     }
     try {
       await api.post('/users/register', { username, email, password });
-      setSuccess('Registration successful! You can now log in.');
-      setTimeout(() => navigate('/login'), 1200);
+      setSuccess('Registration successful! Please check your email to verify your account before logging in.');
+      setIsRegistered(true);
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
     }
   };
+
+  if (isRegistered) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-900">
+        <div className="max-w-sm w-full mx-auto p-8 bg-gray-800/80 backdrop-blur-md border border-gray-700 rounded-2xl shadow-lg flex flex-col gap-5">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold mb-4 text-gray-100">Check Your Email</h2>
+            <div className="text-green-400 text-sm mb-6">{success}</div>
+            <p className="text-gray-300 text-sm mb-6">
+              We've sent a verification link to <span className="font-mono text-blue-400">{email}</span>
+            </p>
+            <p className="text-gray-400 text-xs mb-6">
+              Click the link in your email to activate your account. You can then log in.
+            </p>
+            <div className="space-y-3">
+              <button 
+                onClick={() => setIsRegistered(false)}
+                className="w-full bg-gray-600 text-white rounded py-2 font-semibold hover:bg-gray-700 transition"
+              >
+                Register Another Account
+              </button>
+              <Link 
+                to="/login" 
+                className="block w-full bg-blue-600 text-white rounded py-2 font-semibold hover:bg-blue-700 transition text-center"
+              >
+                Go to Login
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
@@ -65,7 +99,6 @@ function Register() {
           </div>
         </div>
         {error && <div className="text-red-400 text-sm text-center">{error}</div>}
-        {success && <div className="text-green-400 text-sm text-center">{success}</div>}
         <button type="submit" className="bg-blue-600 text-white rounded py-2 font-semibold hover:bg-blue-700 transition">Register</button>
         <div className="text-center text-sm mt-2">
           <Link to="/login" className="text-blue-400 hover:underline">Already have an account? Log in</Link>

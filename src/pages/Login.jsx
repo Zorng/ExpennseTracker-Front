@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '../AuthContext';
 import { Link } from 'react-router-dom';
 import api from '../utils/axios';
+import ResendVerification from '../features/account/ResendVerification';
 
 function Login() {
   const { login } = useAuth();
@@ -9,19 +10,30 @@ function Login() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [showResend, setShowResend] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setShowResend(false);
+    
     if (!email || !password) {
       setError('Email and password are required');
       return;
     }
     try {
       const res = await api.post('/users/login', { email, password });
-      login(res.data.token, res.data.user); // expects { token, user }
+      login(res.data.token, res.data.user);
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
+      const errorMessage = err.response?.data?.message || 'Login failed';
+      setError(errorMessage);
+      
+      // Check if the error indicates unverified email
+      if (errorMessage.toLowerCase().includes('verify') || 
+          errorMessage.toLowerCase().includes('email') ||
+          err.response?.status === 401) {
+        setShowResend(true);
+      }
     }
   };
 
@@ -54,11 +66,21 @@ function Login() {
           </div>
         </div>
         {error && <div className="text-red-400 text-sm text-center">{error}</div>}
-        <button type="submit" className="bg-blue-600 text-white rounded py-2 font-semibold hover:bg-blue-700 transition">Log In</button>
-        <div className="text-center text-sm mt-2">
-          <Link to="/register" className="text-blue-400 hover:underline">Don't have an account? Register</Link>
-          <div className="mt-2">
+        <button type="submit" className="bg-blue-600 text-white rounded py-2 font-semibold hover:bg-blue-700 transition">Login</button>
+        
+        {showResend && (
+          <div className="text-center">
+            <p className="text-gray-300 text-sm mb-3">Need to verify your email?</p>
+            <ResendVerification email={email} />
+          </div>
+        )}
+        
+        <div className="text-center text-sm mt-2 space-y-2">
+          <div>
             <Link to="/forgot-password" className="text-blue-400 hover:underline">Forgot password?</Link>
+          </div>
+          <div>
+            <Link to="/register" className="text-blue-400 hover:underline">Don't have an account? Register</Link>
           </div>
         </div>
       </form>

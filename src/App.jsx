@@ -10,6 +10,7 @@ import CreateRecord from './pages/CreateRecord';
 import EditRecord from './pages/EditRecord';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import EmailVerification from './pages/EmailVerification';
 
 function AppRoutes() {
   const { isAuthenticated, loading } = useAuth();
@@ -26,6 +27,7 @@ function AppRoutes() {
           <Route path="/account" element={isAuthenticated ? <Account /> : <Navigate to="/login" />} />
           <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/" />} />
           <Route path="/register" element={!isAuthenticated ? <Register /> : <Navigate to="/" />} />
+          <Route path="/verify-email" element={<EmailVerification />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
         </Routes>
