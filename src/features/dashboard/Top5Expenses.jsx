@@ -69,21 +69,31 @@ function Top5Expenses({ currency }) {
       ) : records.length === 0 ? (
         <div className="text-gray-400">No data available.</div>
       ) : (
-        <ul className="list-none p-0 m-0 divide-y divide-gray-700">
-          {records.map((rec) => (
-            <li key={rec.id} className="flex items-center gap-4 py-3">
-              <span className="flex-1 text-gray-100 font-medium" title={rec.title}>{truncateTitle(rec.title)}</span>
-              <span className="w-32 text-right font-bold text-gray-100 font-mono tabular-nums" title={`Original: ${rec.originalAmount} ${rec.originalCurrency}`}>
-                {getDisplayAmount(rec)}
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full inline-block" style={{ background: rec.categoryColor || '#888' }}></span>
-                <span className="text-sm font-semibold" style={{ color: rec.categoryColor || '#888' }} title={rec.categoryName}>{truncateCategory(rec.categoryName)}</span>
-              </span>
-              <span className="w-24 text-xs text-gray-400 text-right">{formatDate(rec.date)}</span>
-            </li>
-          ))}
-        </ul>
+        <div className="overflow-x-auto">
+          <table className="min-w-full table-auto text-sm text-gray-100">
+            <thead className="bg-gray-900/80">
+              <tr>
+                <th className="px-4 py-2 text-left font-semibold">Title</th>
+                <th className="px-4 py-2 text-right font-semibold">Amount</th>
+                <th className="px-4 py-2 text-left font-semibold">Category</th>
+                <th className="px-4 py-2 text-right font-semibold">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {records.map((rec) => (
+                <tr key={rec.id} className="border-b border-gray-700 last:border-b-0">
+                  <td className="px-4 py-2 whitespace-nowrap" title={rec.title}>{truncateTitle(rec.title)}</td>
+                  <td className="px-4 py-2 text-right font-bold font-mono tabular-nums" title={`Original: ${rec.originalAmount} ${rec.originalCurrency}`}>{getDisplayAmount(rec)}</td>
+                  <td className="px-4 py-2 whitespace-nowrap flex items-center gap-2" style={{ color: rec.categoryColor || '#888' }}>
+                    <span className="w-3 h-3 rounded-full inline-block" style={{ background: rec.categoryColor || '#888' }}></span>
+                    <span className="text-sm font-semibold" title={rec.categoryName}>{truncateCategory(rec.categoryName)}</span>
+                  </td>
+                  <td className="px-4 py-2 text-xs text-gray-400 text-right whitespace-nowrap">{formatDate(rec.date)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

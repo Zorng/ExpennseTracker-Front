@@ -69,15 +69,20 @@ function CategorySidebar({ onCategorySelect, selectedCategoryId }) {
 
   return (
     <aside className="w-full md:w-[340px] bg-gray-800/80 backdrop-blur-md border border-gray-700 rounded-2xl shadow-lg p-6 mb-4 md:mb-0 md:mr-4">
-      <div className="flex justify-between items-center mb-6">
-        <h3 className="font-bold text-xl text-gray-100">Categories</h3>
-        <button
-          onClick={() => setCollapsed(c => !c)}
-          className="px-2 py-1 rounded bg-gray-700 text-gray-100 hover:bg-gray-600 transition text-xs font-semibold"
-          aria-label={collapsed ? 'Expand categories' : 'Collapse categories'}
-        >
-          {collapsed ? 'Expand' : 'Collapse'}
-        </button>
+      <div className="flex flex-col items-end mb-6">
+        <div className="flex items-center w-full justify-between">
+          <h3 className="font-bold text-xl text-gray-100">Categories</h3>
+          <button
+            onClick={() => setCollapsed(c => !c)}
+            className="px-2 py-1 rounded bg-gray-700 text-gray-100 hover:bg-gray-600 transition text-xs font-semibold"
+            aria-label={collapsed ? 'Expand categories' : 'Collapse categories'}
+          >
+            {collapsed ? 'Expand' : 'Collapse'}
+          </button>
+        </div>
+        {collapsed && (
+          <span className="text-xs text-gray-400 mt-2">expand to see more</span>
+        )}
       </div>
       {!collapsed && <>
         <button onClick={() => setManageMode(m => !m)} className="button-small mb-4 px-3 py-1 bg-gray-700 text-gray-100 rounded hover:bg-gray-600 transition">

@@ -12,14 +12,16 @@ function Records() {
   const navigate = useNavigate();
   const [currencyMode, setCurrencyMode] = useState('default');
 
-  // Filter state
-  const [categoryId, setCategoryId] = useState('');
+  // Filter state as a single object
+  const [filters, setFilters] = useState({
+    categoryId: '',
+    minAmount: '',
+    maxAmount: '',
+    startDate: '',
+    endDate: '',
+    amountCurrency: 'USD',
+  });
   const [categories, setCategories] = useState([]);
-  const [minAmount, setMinAmount] = useState('');
-  const [maxAmount, setMaxAmount] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [amountCurrency, setAmountCurrency] = useState('USD');
 
   // Fetch categories for filter dropdown
   useEffect(() => {
@@ -46,15 +48,32 @@ function Records() {
     update,
     remove,
     refresh,
-    setFilters
-  } = useRecords(10, { categoryId, minAmount, maxAmount, startDate, endDate, amountCurrency });
+    setFilters: setRecordsFilters
+  } = useRecords(10, filters);
 
-  // Update filters in useRecords when any filter changes
+  // Only update useRecords filters when filters state changes (after Apply)
   useEffect(() => {
     setPage(1);
-    setFilters({ categoryId, minAmount, maxAmount, startDate, endDate, amountCurrency });
+    setRecordsFilters(filters);
     // eslint-disable-next-line
-  }, [categoryId, minAmount, maxAmount, startDate, endDate, amountCurrency]);
+  }, [filters]);
+
+  // Handler for Apply Filter button
+  const handleApplyFilters = (newFilters) => {
+    setFilters(newFilters);
+  };
+
+  // Handler for Clear Filters button
+  const handleClearFilters = () => {
+    setFilters({
+      categoryId: '',
+      minAmount: '',
+      maxAmount: '',
+      startDate: '',
+      endDate: '',
+      amountCurrency: 'USD',
+    });
+  };
 
   // Currency conversion logic
   const displayAmount = (record) => {
@@ -103,22 +122,6 @@ function Records() {
     }
   };
 
-  // Modal close
-  const handleCloseForm = () => {
-    setShowForm(false);
-    setEditTx(null);
-  };
-
-  // Filter UI
-  const clearFilters = () => {
-    setCategoryId('');
-    setMinAmount('');
-    setMaxAmount('');
-    setStartDate('');
-    setEndDate('');
-    setAmountCurrency('USD');
-  };
-
   return (
     <div className="flex flex-col md:flex-row-reverse gap-6 md:gap-8 w-full">
       {/* Sidebar Section */}
@@ -126,33 +129,25 @@ function Records() {
         <div className="hidden md:block">
           <RecordFilters
             categories={categories}
-            categoryId={categoryId} setCategoryId={setCategoryId}
-            minAmount={minAmount} setMinAmount={setMinAmount}
-            maxAmount={maxAmount} setMaxAmount={setMaxAmount}
-            startDate={startDate} setStartDate={setStartDate}
-            endDate={endDate} setEndDate={setEndDate}
-            amountCurrency={amountCurrency} setAmountCurrency={setAmountCurrency}
-            clearFilters={clearFilters}
+            initialFilters={filters}
+            onApply={handleApplyFilters}
+            clearFilters={handleClearFilters}
           />
         </div>
         <CategorySidebar />
       </div>
       {/* Main Records Section */}
       <main className="flex-1">
-        <h2 className="text-xl font-bold mb-4 text-gray-100">Records</h2>
         {/* Filter Controls (mobile only) */}
         <div className="md:hidden mb-4">
           <RecordFilters
             categories={categories}
-            categoryId={categoryId} setCategoryId={setCategoryId}
-            minAmount={minAmount} setMinAmount={setMinAmount}
-            maxAmount={maxAmount} setMaxAmount={setMaxAmount}
-            startDate={startDate} setStartDate={setStartDate}
-            endDate={endDate} setEndDate={setEndDate}
-            amountCurrency={amountCurrency} setAmountCurrency={setAmountCurrency}
-            clearFilters={clearFilters}
+            initialFilters={filters}
+            onApply={handleApplyFilters}
+            clearFilters={handleClearFilters}
           />
         </div>
+        <h2 className="text-xl font-bold mb-4 text-gray-100">Records</h2>
         {/* Currency Toggle */}
         <div className="mb-4 flex items-center gap-2">
           <span className="font-medium text-gray-200">Display currency:</span>
