@@ -114,15 +114,15 @@ function RecordForm({ onSubmit, onCancel, initialData = {}, compact = false }) {
           ))}
         </select>
         {categoryId === '__create__' && (
-          <div className="mt-2 flex flex-col gap-2 bg-gray-100 p-2 rounded max-h-48 overflow-y-auto">
-            <h4 className="font-semibold">Create New Category</h4>
-            <label className="font-medium" htmlFor="new-category-name">Category name</label>
-            <input id="new-category-name" placeholder="Category name" value={newCatName} onChange={e => setNewCatName(e.target.value)} className="border rounded px-2 py-1" />
+          <div className="mt-2 flex flex-col gap-2 bg-gray-800/80 border border-gray-700 p-3 rounded max-h-48 overflow-y-auto">
+            <h4 className="font-semibold text-gray-100">Create New Category</h4>
+            <label className="font-medium text-gray-200" htmlFor="new-category-name">Category name</label>
+            <input id="new-category-name" placeholder="Category name" value={newCatName} onChange={e => setNewCatName(e.target.value)} className="border border-gray-700 bg-gray-900/80 text-gray-100 rounded px-2 py-1" />
             <div className="flex items-center gap-2">
-              <label htmlFor="new-category-color" className="font-medium">Color</label>
+              <label htmlFor="new-category-color" className="font-medium text-gray-200">Color</label>
               <input id="new-category-color" type="color" value={newCatColor} onChange={e => setNewCatColor(e.target.value)} className="w-12 h-12 p-0 border-0 rounded" />
-              <button type="button" onClick={handleCreateCategory} className="button-small px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition">Create</button>
-              <button type="button" onClick={() => { setShowCreateCategory(false); setCategoryId(''); }} className="button-small px-2 py-1 bg-gray-300 rounded hover:bg-gray-400 transition">Cancel</button>
+              <button type="button" onClick={handleCreateCategory} className="button-small px-2 py-1 bg-green-600 text-white rounded hover:bg-green-500 transition">Create</button>
+              <button type="button" onClick={() => { setShowCreateCategory(false); setCategoryId(''); }} className="button-small px-2 py-1 bg-gray-700 text-gray-100 rounded hover:bg-gray-600 transition">Cancel</button>
             </div>
           </div>
         )}

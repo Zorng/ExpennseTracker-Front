@@ -38,8 +38,74 @@ function Navbar() {
         </div>
         {/* Mobile Dropdown Menu */}
         {menuOpen && (
-          <div className="md:hidden absolute left-0 right-0 top-16 z-50 bg-gray-950/80 backdrop-blur-md shadow-lg border-t border-gray-800 animate-fade-in">
-            <ul className="flex flex-col gap-2 p-4">{navLinks}</ul>
+          <div className="md:hidden fixed left-0 right-0 top-16 z-[9999] bg-gray-950/95 backdrop-blur-md shadow-lg border-t border-gray-800 animate-fade-in">
+            <ul className="flex flex-col p-4">
+              {isAuthenticated && (
+                <li className="mb-3">
+                  <Link 
+                    to="/" 
+                    className="block w-full py-3 px-4 font-semibold text-gray-100 hover:text-blue-400 hover:bg-gray-800/50 transition rounded-lg" 
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Dashboard
+                  </Link>
+                </li>
+              )}
+              {isAuthenticated && (
+                <li className="mb-3">
+                  <Link 
+                    to="/records" 
+                    className="block w-full py-3 px-4 font-semibold text-gray-100 hover:text-blue-400 hover:bg-gray-800/50 transition rounded-lg" 
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Records
+                  </Link>
+                </li>
+              )}
+              {isAuthenticated && (
+                <li className="mb-3">
+                  <Link 
+                    to="/account" 
+                    className="block w-full py-3 px-4 font-semibold text-gray-100 hover:text-blue-400 hover:bg-gray-800/50 transition rounded-lg" 
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Account
+                  </Link>
+                </li>
+              )}
+              {!isAuthenticated && (
+                <li className="mb-3">
+                  <Link 
+                    to="/login" 
+                    className="block w-full py-3 px-4 font-semibold text-gray-100 hover:text-blue-400 hover:bg-gray-800/50 transition rounded-lg" 
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Login
+                  </Link>
+                </li>
+              )}
+              {!isAuthenticated && (
+                <li className="mb-3">
+                  <Link 
+                    to="/register" 
+                    className="block w-full py-3 px-4 font-semibold text-gray-100 hover:text-blue-400 hover:bg-gray-800/50 transition rounded-lg" 
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Register
+                  </Link>
+                </li>
+              )}
+              {isAuthenticated && (
+                <li className="mb-3">
+                  <button 
+                    onClick={() => { logout(); setMenuOpen(false); }} 
+                    className="block w-full py-3 px-4 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-left font-semibold"
+                  >
+                    Logout
+                  </button>
+                </li>
+              )}
+            </ul>
           </div>
         )}
       </div>
