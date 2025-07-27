@@ -50,15 +50,13 @@ function Dashboard() {
     <div className="max-w-6xl mx-auto mt-8 p-2 sm:p-6">
       {/* Welcome Message */}
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-100 mb-2">
-          Hello, {getUserDisplayName()}! 👋
-        </h1>
-        <p className="text-gray-300">Welcome to your expense dashboard</p>
-      </div>
-      
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-100">Dashboard</h2>
-        <div className="flex gap-3">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-100 mb-2">
+              Hello, {getUserDisplayName()}! 👋
+            </h1>
+            <p className="text-gray-300">Welcome to your expense dashboard</p>
+          </div>
           <button
             onClick={() => setShowQuickAdd(true)}
             className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-semibold flex items-center gap-2"
@@ -66,13 +64,11 @@ function Dashboard() {
             <span>+</span>
             Quick Add
           </button>
-          <button
-            onClick={() => navigate('/records/create')}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold"
-          >
-            Create Record
-          </button>
         </div>
+      </div>
+      
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-bold text-gray-100">Dashboard</h2>
       </div>
 
       {/* Month/Year Selector and Currency Toggle */}
