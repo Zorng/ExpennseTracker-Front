@@ -1,5 +1,6 @@
 import RecordForm from '../features/records/RecordForm';
 import { useNavigate } from 'react-router-dom';
+import api from '../utils/axios';
 
 function CreateRecord() {
   const navigate = useNavigate();
@@ -7,14 +8,9 @@ function CreateRecord() {
   const handleSubmit = async (data) => {
     // POST to /records
     try {
-      const res = await fetch('/records', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-      if (!res.ok) throw new Error('Failed to create record');
+      await api.post('/records', data);
       navigate('/records');
-    } catch {
+    } catch (err) {
       alert('Could not create record');
     }
   };
