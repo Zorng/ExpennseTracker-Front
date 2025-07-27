@@ -1,10 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
+import { createPortal } from 'react-dom';
 
 function Navbar() {
   const { isAuthenticated, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const navLinks = (
     <>
@@ -37,7 +43,7 @@ function Navbar() {
           </button>
         </div>
         {/* Mobile Dropdown Menu */}
-        {menuOpen && (
+        {menuOpen && mounted && createPortal(
           <>
             {/* Backdrop overlay */}
             <div className="md:hidden fixed inset-0 bg-black/50 z-[9998]" onClick={() => setMenuOpen(false)}></div>
@@ -111,7 +117,8 @@ function Navbar() {
               )}
             </ul>
             </div>
-          </>
+          </>,
+          document.body
         )}
       </div>
     </nav>
