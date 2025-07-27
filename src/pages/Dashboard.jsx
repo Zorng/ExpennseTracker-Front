@@ -1,18 +1,22 @@
 import { useState } from 'react';
 import { useAuth } from '../AuthContext';
+import { useNavigate } from 'react-router-dom';
 import MonthYearSelector from '../features/dashboard/MonthYearSelector';
 import CurrencyToggleSummary from '../features/dashboard/CurrencyToggleSummary';
 import PieChart from '../features/dashboard/PieChart';
 import useDashboardSummary from '../features/dashboard/useDashboardSummary';
 import useDashboardAverages from '../features/dashboard/useDashboardAverages';
 import Top5Expenses from '../features/dashboard/Top5Expenses';
+import QuickAddRecord from '../features/records/QuickAddRecord';
 
 function Dashboard() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const now = new Date();
   const [selectedMonth, setSelectedMonth] = useState(now.getMonth() + 1);
   const [selectedYear, setSelectedYear] = useState(now.getFullYear());
   const [currency, setCurrency] = useState('USD');
+  const [showQuickAdd, setShowQuickAdd] = useState(false);
 
   const { categories, loading, error } = useDashboardSummary(selectedYear, selectedMonth, currency);
   const { averages, loading: loadingAvg, error: errorAvg } = useDashboardAverages(currency);
@@ -36,6 +40,12 @@ function Dashboard() {
     return 'User';
   };
 
+  const handleQuickAddSuccess = () => {
+    setShowQuickAdd(false);
+    // Optionally refresh the dashboard data
+    window.location.reload();
+  };
+
   return (
     <div className="max-w-6xl mx-auto mt-8 p-2 sm:p-6">
       {/* Welcome Message */}
@@ -46,7 +56,25 @@ function Dashboard() {
         <p className="text-gray-300">Welcome to your expense dashboard</p>
       </div>
       
-      <h2 className="text-2xl font-bold mb-6 text-gray-100">Dashboard</h2>
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-bold text-gray-100">Dashboard</h2>
+        <div className="flex gap-3">
+          <button
+            onClick={() => setShowQuickAdd(true)}
+            className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-semibold flex items-center gap-2"
+          >
+            <span>+</span>
+            Quick Add
+          </button>
+          <button
+            onClick={() => navigate('/records/create')}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold"
+          >
+            Create Record
+          </button>
+        </div>
+      </div>
+
       {/* Month/Year Selector and Currency Toggle */}
       <div className="flex items-center gap-4 mb-6">
         <MonthYearSelector
@@ -57,6 +85,16 @@ function Dashboard() {
         />
         <CurrencyToggleSummary currency={currency} onChange={setCurrency} />
       </div>
+
+      {/* Quick Add Modal */}
+      {showQuickAdd && (
+        <QuickAddRecord
+          onClose={() => setShowQuickAdd(false)}
+          onSuccess={handleQuickAddSuccess}
+          currency={currency}
+        />
+      )}
+
       {/* Responsive Layout: Summary left, Averages & Top 5 right */}
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Summary Section (Donut + Category Breakdown) */}
