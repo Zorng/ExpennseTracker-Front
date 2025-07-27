@@ -38,8 +38,12 @@ function Navbar() {
         </div>
         {/* Mobile Dropdown Menu */}
         {menuOpen && (
-          <div className="md:hidden fixed left-0 right-0 top-16 z-[9999] bg-gray-950/95 backdrop-blur-md shadow-lg border-t border-gray-800 animate-fade-in">
-            <ul className="flex flex-col p-4">
+          <>
+            {/* Backdrop overlay */}
+            <div className="md:hidden fixed inset-0 bg-black/50 z-[9998]" onClick={() => setMenuOpen(false)}></div>
+            {/* Dropdown menu */}
+            <div className="md:hidden fixed left-0 right-0 top-16 z-[9999] bg-gray-950/95 backdrop-blur-md shadow-lg border-t border-gray-800 animate-fade-in">
+              <ul className="flex flex-col p-4">
               {isAuthenticated && (
                 <li className="mb-3">
                   <Link 
@@ -106,7 +110,8 @@ function Navbar() {
                 </li>
               )}
             </ul>
-          </div>
+            </div>
+          </>
         )}
       </div>
     </nav>
