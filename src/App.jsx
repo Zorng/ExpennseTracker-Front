@@ -18,7 +18,7 @@ function AppRoutes() {
   return (
     <>
       <Navbar />
-      <main className="w-full max-w-4xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 text-gray-100">
+      <main className="w-full max-w-4xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 text-gray-100 pb-8">
         <Routes>
           <Route path="/" element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} />
           <Route path="/records" element={isAuthenticated ? <Records /> : <Navigate to="/login" />} />
