@@ -12,7 +12,7 @@ function Top5Expenses({ currency }) {
       setLoading(true);
       setError('');
       try {
-        const res = await api.get('/summary/top5', { params: { currency } });
+        const res = await api.get('/summary/top5', { params: { displayCurrency: currency } });
         setRecords(res.data.top5Expenses || []);
         setDisplayCurrency(res.data.displayCurrency || 'USD');
       } catch {
