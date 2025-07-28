@@ -11,6 +11,7 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [showResend, setShowResend] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,6 +22,8 @@ function Login() {
       setError('Email and password are required');
       return;
     }
+    
+    setLoading(true);
     try {
       const res = await api.post('/users/login', { email, password });
       login(res.data.token, res.data.user);
@@ -32,6 +35,8 @@ function Login() {
       if (err.response?.data?.needsVerification) {
         setShowResend(true);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,7 +69,13 @@ function Login() {
           </div>
         </div>
         {error && <div className="text-red-400 text-sm text-center">{error}</div>}
-        <button type="submit" className="bg-blue-600 text-white rounded py-2 font-semibold hover:bg-blue-700 transition">Login</button>
+        <button 
+          type="submit" 
+          className="bg-blue-600 text-white rounded py-2 font-semibold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed" 
+          disabled={loading}
+        >
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
         
         {showResend && (
           <div className="text-center">

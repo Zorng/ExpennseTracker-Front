@@ -10,6 +10,7 @@ function Register() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [isRegistered, setIsRegistered] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -24,12 +25,16 @@ function Register() {
       setError('Password must be at least 6 characters');
       return;
     }
+    
+    setLoading(true);
     try {
       await api.post('/users/register', { username, email, password });
       setSuccess('Registration successful! Please check your email to verify your account before logging in.');
       setIsRegistered(true);
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -99,7 +104,13 @@ function Register() {
           </div>
         </div>
         {error && <div className="text-red-400 text-sm text-center">{error}</div>}
-        <button type="submit" className="bg-blue-600 text-white rounded py-2 font-semibold hover:bg-blue-700 transition">Register</button>
+        <button 
+          type="submit" 
+          className="bg-blue-600 text-white rounded py-2 font-semibold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed" 
+          disabled={loading}
+        >
+          {loading ? 'Registering...' : 'Register'}
+        </button>
         <div className="text-center text-sm mt-2">
           <Link to="/login" className="text-blue-400 hover:underline">Already have an account? Log in</Link>
         </div>
