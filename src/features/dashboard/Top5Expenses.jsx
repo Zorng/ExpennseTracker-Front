@@ -27,6 +27,7 @@ function Top5Expenses({ currency }) {
 
   // Format amount for display
   const getDisplayAmount = (record) => {
+    // Use the currency prop to determine display format
     if (currency === 'USD') {
       return `$${Number(record.amount).toFixed(2)}`;
     } else if (currency === 'KHR') {
