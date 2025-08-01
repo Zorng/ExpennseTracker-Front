@@ -13,6 +13,7 @@ A modern, responsive expense tracking application built with React and Vite. Tra
 - **Quick Add**: Fast expense entry directly from dashboard
 - **Filtering & Search**: Find specific expenses with advanced filters
 - **Pagination**: Efficient browsing of large expense lists
+- **Analytics**: Built-in web analytics for user behavior insights
 
 ## 🛠️ Tech Stack
 
@@ -22,6 +23,7 @@ A modern, responsive expense tracking application built with React and Vite. Tra
 - **HTTP Client**: Axios
 - **Routing**: React Router v6
 - **Charts**: Custom SVG-based pie charts
+- **Analytics**: Vercel Web Analytics
 - **Deployment**: Vercel-ready
 
 ## 📋 Prerequisites
@@ -142,6 +144,17 @@ src/
 2. Connect your repository to Vercel
 3. Set environment variables in Vercel dashboard
 4. Deploy!
+
+### Web Analytics
+
+This project includes Vercel Web Analytics for tracking user interactions and performance metrics. Analytics are automatically enabled when deployed to Vercel and provide insights into:
+
+- Page views and navigation patterns
+- User engagement metrics
+- Performance data
+- Geographic distribution of users
+
+No additional configuration is required - analytics will start collecting data immediately upon deployment.
 
 ### Environment Variables for Production
 
