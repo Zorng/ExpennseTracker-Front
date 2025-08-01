@@ -23,7 +23,6 @@ export function AuthProvider({ children }) {
   useEffect(() => {
 
     if (token) {
-      // Optionally, fetch user info here
 
       fetchUser();
     }

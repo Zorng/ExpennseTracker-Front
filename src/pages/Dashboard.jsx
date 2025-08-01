@@ -52,10 +52,10 @@ function Dashboard() {
       <div className="mb-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-100 mb-2">
-              Hello, {getUserDisplayName()}! 👋
-            </h1>
-            <p className="text-gray-300">Welcome to your expense dashboard</p>
+        <h1 className="text-3xl font-bold text-gray-100 mb-2">
+          Hello, {getUserDisplayName()}! 👋
+        </h1>
+        <p className="text-gray-300">Welcome to your expense dashboard</p>
           </div>
           <button
             onClick={() => setShowQuickAdd(true)}
